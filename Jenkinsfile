@@ -31,9 +31,10 @@ pipeline {
             }
         }
         stage('Cleaning up') {
-             steps{
+             steps {
                 sh "docker rmi $registry:$BUILD_NUMBER"
                }
+        }
         stage("Push to Dockerhub") {
             steps {
                 script {
@@ -44,6 +45,5 @@ pipeline {
             }
         }
  }
-} 
  
 }
