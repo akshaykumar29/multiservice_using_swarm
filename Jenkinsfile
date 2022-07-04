@@ -15,7 +15,7 @@ pipeline {
                 script {
                      image = registry + ":${env.BUILD_NUMBER}"
                      println ("${image}")
-                     dockerImage = docker.build image + ":$BUILD_NUMBER"
+                     dockerImage = docker.build image
                     
                 }
             }
