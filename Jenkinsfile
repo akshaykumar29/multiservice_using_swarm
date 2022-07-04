@@ -32,7 +32,7 @@ pipeline {
         }
         stage('Cleaning up') {
              steps {
-                sh "docker rmi $registry:$BUILD_NUMBER"
+                 sh "docker rm ${JOB_NAME}
                }
         }
         stage("Push to Dockerhub") {
