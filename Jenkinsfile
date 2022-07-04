@@ -16,7 +16,7 @@ pipeline {
                      img = registry + ":${env.BUILD_ID}"
                      println ("${img}")
                      //dockerImage = docker.build("${img}")
-                     sh 'docker build --tag "${img}" .' 
+                     sh 'docker build --tag python-docker .' 
                     
                 }
             }
