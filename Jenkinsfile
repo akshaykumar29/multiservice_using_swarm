@@ -32,7 +32,7 @@ pipeline {
         }
         stage('Cleaning up') {
              steps {
-                 sh "docker rm ${JOB_NAME}"
+                 sh "docker rm -f ${JOB_NAME}"
                }
         }
         stage("Push to Dockerhub") {
