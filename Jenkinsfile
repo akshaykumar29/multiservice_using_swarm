@@ -1,8 +1,9 @@
+def image
 pipeline {
     environment {
-        imagename = "22119697/ci-cd-jenkins"
+        image = "22119697/ci-cd-jenkins"
         registryCredentials = "docker hub user password"
-        dockerImage = ""
+        dockerImage = ''
     }
     agent any
 
@@ -12,10 +13,9 @@ pipeline {
 
             steps {
                 script {
-                     //img = registry + ":${env.BUILD_ID}"
-                     //println ("${img}")
-                    echo "imagename"
-                     dockerImage = docker.build imagename + ":$BUILD_NUMBER"
+                     image = registry + ":${env.BUILD_NUMBER}"
+                     println ("${image}"
+                     dockerImage = docker.build image + ":$BUILD_NUMBER"
                     
                 }
             }
@@ -27,7 +27,7 @@ pipeline {
         stage("Testing - running in Jenkins Node") {
 
             steps {
-                sh "docker run -d --name ${JOB_NAME} -p 5000:5000 ${img}"
+                sh "docker run -d --name ${JOB_NAME} -p 5000:5000 ${image}"
             }
         }
         stage("Push to Dockerhub") {
