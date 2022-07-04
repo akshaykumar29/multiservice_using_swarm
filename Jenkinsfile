@@ -2,7 +2,7 @@ def image
 pipeline {
     environment {
         registry = "22119697/ci-cd-jenkins"
-        registryCredentials = "07ad9a63-f47d-40c9-ab8d-a37e2a2afa7f"
+        registryCredential = 'dockerhubid'
         dockerImage = ''
     }
     agent any
