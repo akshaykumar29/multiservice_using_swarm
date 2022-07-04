@@ -28,7 +28,7 @@ pipeline {
         stage("Testing - running in Jenkins Node") {
 
             steps {
-                sh "docker run -d --name ${JOB_NAME} -p 5000:5000 ${img}"
+                sh "docker run -d --name {JOB_NAME} -p 5000:5000 {img}"
             }
         }
         stage("Push to Dockerhub") {
