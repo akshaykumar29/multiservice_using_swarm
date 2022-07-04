@@ -1,7 +1,6 @@
-def img
 pipeline {
     environment {
-        registry = "22119697/ci-cd-jenkins"
+        imagename = "22119697/ci-cd-jenkins"
         registryCredentials = "docker hub user password"
         dockerImage = ""
     }
@@ -13,9 +12,9 @@ pipeline {
 
             steps {
                 script {
-                     img = registry + ":${env.BUILD_ID}"
-                     println ("${img}")
-                     dockerImage = docker.build img
+                     //img = registry + ":${env.BUILD_ID}"
+                     //println ("${img}")
+                     dockerImage = docker.build imgagename
                     
                 }
             }
