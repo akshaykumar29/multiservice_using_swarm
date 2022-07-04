@@ -1,7 +1,7 @@
 def image
 pipeline {
     environment {
-        image = "22119697/ci-cd-jenkins"
+        registry = "22119697/ci-cd-jenkins"
         registryCredentials = "docker hub user password"
         dockerImage = ''
     }
