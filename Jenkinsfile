@@ -14,7 +14,7 @@ pipeline {
                 script {
                      //img = registry + ":${env.BUILD_ID}"
                      //println ("${img}")
-                    echo 'imagename'
+                    echo imagename
                      dockerImage = docker.build imagename
                     
                 }
