@@ -30,6 +30,10 @@ pipeline {
                 sh "docker run -d --name ${JOB_NAME} -p 5000:5000 ${image}"
             }
         }
+        stage('Cleaning up') {
+             steps{
+                sh "docker rmi $registry:$BUILD_NUMBER"
+               }
         stage("Push to Dockerhub") {
             steps {
                 script {
@@ -39,12 +43,7 @@ pipeline {
                 }
             }
         }
-        stage('Cleaning up') {
-            steps{
-            sh "docker rmi $registry:$BUILD_NUMBER"
-            }
-     }
  }
- 
+} 
  
 }
