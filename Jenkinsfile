@@ -2,7 +2,7 @@ def image
 pipeline {
     environment {
         registry = "manish754/python"
-        registryCredential = 'docker-hub-login'
+        registryCredential = 'dockerhub_id'
         dockerImage = ''
     }
     agent any
