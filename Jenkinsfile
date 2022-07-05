@@ -44,7 +44,9 @@ pipeline {
                 }
             }
         }
+        stage ("define remote"){
             def remote = [:]
+        
             remote.name = "ubuntu"
             remote.host = "3.144.212.131"
             remote.allowAnyHosts = true
@@ -61,5 +63,6 @@ pipeline {
             }
            }
        }   
-}
 
+    }
+}
