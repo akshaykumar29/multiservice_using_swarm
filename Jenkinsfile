@@ -51,11 +51,13 @@ pipeline {
             remote.allowAnyHosts = true
 
        node {
-    withCredentials([sshUserPrivateKey(credentialsId: 'sshUser', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
+    withCredentials([sshUserPrivateKey(credentialsId: 'sshUser', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'ubuntu')]) {
              remote.user = ubuntu
              remote.identityFile = identity
              stage("SSH Steps Rocks!") {
-             sshCommand remote: remote, command: ‘docker pull ${image}’
+             //sshCommand remote: remote, command: ‘docker pull ${image}’
+              writeFile file: 'abc.sh', text: 'date'
+              sshPut remote: remote, from: 'abc.sh', into: '.'
               }
             }
            }
