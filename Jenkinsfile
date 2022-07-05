@@ -45,25 +45,21 @@ pipeline {
             }
         }
         stage("running in staging") {
-            steps {
-                script {
-                    def stopcontainer = "docker stop ${JOB_NAME}"
-                    def delcontName = "docker rm ${JOB_NAME}"
-                    def delimages = "docker image prune -a --force"
-            
+            def remote = [:]
+            remote.name = “ubuntu
+            remote.host = "3.144.212.131"
+            remote.allowAnyHosts = true
 
-                    def drun = "docker run -d --name ${JOB_NAME} -p 5000:5000 ${img}"
-                    sshagent(['ssh_login']) {
-                        sh returnStatus: true, script: "ssh -o StrictHostKeyChecking=no ubuntu@3.144.212.131 ${stopcontainer}"
-                        sh returnStatus: true, script: "ssh -o StrictHostKeyChecking=no ubuntu@3.144.212.131 ${delcontName}"
-                        sh returnStatus: true, script: "ssh -o StrictHostKeyChecking=no ubuntu@3.144.212.131 ${delimages}"
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.144.212.131 ${drun}"
-                    }
-                    
-                }
-                
+       node {
+             withCredentials([sshUserPrivateKey(credentialsId: 'ssh_login’, keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
+             remote.user = ubuntu
+             remote.identityFile = identity
+             stage("SSH Steps Rocks!") {
+             sshCommand remote: remote, command: ‘docker pull ${image}’
+              }
             }
-        }
+           }
+   
  }
  
 }
