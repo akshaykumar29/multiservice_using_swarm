@@ -51,7 +51,7 @@ pipeline {
             remote.allowAnyHosts = true
 
        node {
-             withCredentials([sshUserPrivateKey(credentialsId: 'ssh_login’, keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
+    withCredentials([sshUserPrivateKey(credentialsId: 'sshUser', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
              remote.user = ubuntu
              remote.identityFile = identity
              stage("SSH Steps Rocks!") {
