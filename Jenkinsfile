@@ -47,19 +47,17 @@ pipeline {
         stage("running in staging") {
             
             def remote = [:]
-            remote.name = “ubuntu
+            remote.name = "ubuntu"
             remote.host = "3.144.212.131"
             remote.allowAnyHosts = true
             stage('Remote SSH') 
             {
             sshCommand remote: remote, command: "ls -lrt"
-            sshCommand remote: remote, command: "for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done"
     
             }
 
             }
            }
        }   
- }
  
-}
+
