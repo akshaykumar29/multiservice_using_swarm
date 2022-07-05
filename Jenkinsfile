@@ -45,20 +45,18 @@ pipeline {
             }
         }
         stage("running in staging") {
+            
             def remote = [:]
             remote.name = “ubuntu
             remote.host = "3.144.212.131"
             remote.allowAnyHosts = true
+            stage('Remote SSH') 
+            {
+            sshCommand remote: remote, command: "ls -lrt"
+            sshCommand remote: remote, command: "for i in {1..5}; do echo -n \"Loop \$i \"; date ; sleep 1; done"
+    
+            }
 
-       node {
-    withCredentials([sshUserPrivateKey(credentialsId: 'sshUser', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'ubuntu')]) {
-             remote.user = ubuntu
-             remote.identityFile = identity
-             stage("SSH Steps Rocks!") {
-             //sshCommand remote: remote, command: ‘docker pull ${image}’
-              writeFile file: 'abc.sh', text: 'date'
-              sshPut remote: remote, from: 'abc.sh', into: '.'
-              }
             }
            }
        }   
