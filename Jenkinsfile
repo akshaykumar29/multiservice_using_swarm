@@ -44,20 +44,22 @@ pipeline {
                 }
             }
         }
-        stage("running in staging") {
-            
             def remote = [:]
             remote.name = "ubuntu"
             remote.host = "3.144.212.131"
             remote.allowAnyHosts = true
-            stage('Remote SSH') 
-            {
-            sshCommand remote: remote, command: "ls -lrt"
-    
+            
+           node {
+            withCredentials([sshUserPrivateKey(credentialsId: 'sshUser', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
+            remote.user = userName
+            remote.identityFile = identity
+        stage("SSH Steps Rocks!") {
+            writeFile file: 'abc.sh', text: 'date'
+            sshPut remote: remote, from: 'abc.sh', into: '.'
             }
 
             }
            }
        }   
- 
+}
 
