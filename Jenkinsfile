@@ -1,8 +1,8 @@
 def image
 pipeline {
     environment {
-        registry = "22119697/pipline"
-        registryCredential = 'docker_hub'
+        registry = "akshaykumar29/pipeline"
+        registryCredential = 'docker-id'
         dockerImage = ''
     }
     agent any
@@ -44,12 +44,12 @@ pipeline {
                 }
             }
         }
-        stage("running on dev-server") {
+        stage("running on prod_server") {
             steps{
                 script{
                      def dockerRun = "docker run -d --name ${JOB_NAME} -p 5000:5000 ${image}"
-                     sshagent (['dev-server']){
-                     sh "ssh -o StrictHostKeyChecking=no ubuntu@18.118.85.235 ${dockerRun}"
+                     sshagent (['prod_server']){
+                     sh "ssh -o StrictHostKeyChecking=no ubuntu@13.233.62.35 ${dockerRun}"
                      
                     }
                 }
