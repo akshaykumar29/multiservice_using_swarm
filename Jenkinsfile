@@ -44,25 +44,19 @@ pipeline {
                 }
             }
         }
-        stage ("define remote"){
-            def remote = [:]
-        
-            remote.name = "ubuntu"
-            remote.host = "3.144.212.131"
-            remote.allowAnyHosts = true
+        stage("running on dev-server") {
+            steps{
+                script{
+                     def dockerRun = "docker run -d --name ${JOB_NAME} -p 5000:5000 ${image}"
+                     sshagent (['dev-server']){
+                     sh "ssh -o StrictHostKeyChecking=no ubuntu@18.118.85.235 ${dockerRun}"
+                     
+                    }
+                }
+            }
             
-           node {
-            withCredentials([sshUserPrivateKey(credentialsId: 'sshUser', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
-            remote.user = userName
-            remote.identityFile = identity
-        stage("SSH Steps Rocks!") {
-            writeFile file: 'abc.sh', text: 'date'
-            sshPut remote: remote, from: 'abc.sh', into: '.'
-            }
-
-            }
-           }
-       }   
-
+        }
+          
     }
+
 }
