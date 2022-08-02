@@ -8,7 +8,7 @@ services:
     deploy:  
       replicas: 4
     labels:
-       - "constraint:node==node1"  
+       - "constraint:node==node-1"  
     networks:
       - akshay29net
   cont30:
@@ -18,7 +18,7 @@ services:
     deploy:
       replicas: 3
     labels:
-       - "constraint:node==node2"
+       - "constraint:node==node-2"
     networks:
       - akshay29net
 networks:
