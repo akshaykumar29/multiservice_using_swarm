@@ -6,7 +6,7 @@ services:
     ports:
       - 3089:3089 
     deploy:  
-      replicas: 2
+      replicas: 3
     networks:
       - akshay29net
   cont30:
@@ -14,7 +14,7 @@ services:
     ports:
       - 5000:5000
     deploy:
-      replicas: 2
+      replicas: 3
     networks:
       - akshay29net
 networks:
