@@ -1,0 +1,13 @@
+version: '3.1'
+
+services:
+  cont29:
+    image: akshaykumar29/swarm
+    ports:
+      - 3089:3089 
+    deploy:  
+      replicas: 2
+    networks:
+      - akshay29net
+networks:
+  akshay29net:
