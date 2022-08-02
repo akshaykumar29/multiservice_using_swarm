@@ -9,5 +9,13 @@ services:
       replicas: 2
     networks:
       - akshay29net
+  cont30:
+    image: akshaykumar29/swarm2
+    ports:
+      - 5000:5000
+    deploy:
+      replicas: 2
+    networks:
+      - akshay29net
 networks:
   akshay29net:
