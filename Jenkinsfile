@@ -1,62 +1,32 @@
-def image
-pipeline {
-    environment {
-        registry = "akshaykumar29/pipeline"
-        registryCredential = 'docker-id'
-        dockerImage = ''
+node{
+    stage("Git CheckOut"){
+        git url: 'https://github.com/akshaykumar29/ci_cd-on-swarm.git',branch: 'main'
     }
-    agent any
-
-    stages{
-        
-        stage("Build Image") {
-
-            steps {
-                script {
-                     image = registry + ":${env.BUILD_NUMBER}"
-                     println ("${image}")
-                     dockerImage = docker.build image
-                    
-                }
-            }
-
-        
-
-        }
-
-        stage("Testing - running in Jenkins Node") {
-
-            steps {
-                sh "docker run -d --name ${JOB_NAME} -p 5000:5000 ${image}"
-            }
-        }
-        stage('Cleaning up') {
-             steps {
-                 sh "docker rm -f ${JOB_NAME}"
-               }
-        }
-        stage("Push to Dockerhub") {
-            steps {
-                script {
-                    docker.withRegistry('', registryCredential ) {
-                        dockerImage.push()
-                    }
-                }
-            }
-        }
-        stage("running on prod_server") {
-            steps{
-                script{
-                     def dockerRun = "docker run -d --name ${JOB_NAME} -p 5000:5000 ${image}"
-                     sshagent (['prod_server']){
-                     sh "ssh -o StrictHostKeyChecking=no ubuntu@13.233.62.35 ${dockerRun}"
-                     
-                    }
-                }
-            }
-            
-        }
-          
+    
+   
+    
+    stage("Build Dokcer Image") {
+         sh "docker build -t akshaykumar29/swarm ."
     }
-
+    
+    stage("Docker Push"){
+        withCredentials([string(credentialsId: 'docker_hub_ki', variable: 'docker_hub_ki')]) {
+          sh "docker login -u akshaykumar29 -p ${docker_hub_ki}"
+        }
+        sh "docker push akshaykumar29/swarm"
+        
+    }
+    
+    // Remove local image in Jenkins Server
+    stage("Remove Local Image"){
+        sh "docker rmi -f akshaykumar29/swarm"
+    }
+    
+    stage("Deploy to docker swarm cluster"){
+        sshagent(['ssh_agent_ki']) {
+		    sh 'scp -o StrictHostKeyChecking=no  docker-compose.yml ubuntu@13.233.38.224:'
+		    //sh 'ssh -o StrictHostKeyChecking=no ubuntu@13.233.38.224 docker stack rm springboot'
+                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@13.233.38.224 docker stack deploy --prune --compose-file docker-compose.yml teststack'
+        }
+    }
 }
