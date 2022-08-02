@@ -1,6 +1,6 @@
 node{
     stage("Git CheckOut"){
-        git url: 'https://github.com/akshaykumar29/ci_cd-on-swarm.git',branch: 'main'
+        git url: 'https://github.com/akshaykumar29/py-project.git',branch: 'main'
     }
     
    
