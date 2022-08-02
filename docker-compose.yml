@@ -7,7 +7,7 @@ services:
       - 3089:3089 
     deploy:  
       replicas: 4
-    environment:
+    labels:
        - "constraint:node==node1"  
     networks:
       - akshay29net
@@ -17,7 +17,7 @@ services:
       - 5000:5000
     deploy:
       replicas: 3
-    environment:
+    labels:
        - "constraint:node==node2"
     networks:
       - akshay29net
