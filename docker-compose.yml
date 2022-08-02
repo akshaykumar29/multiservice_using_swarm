@@ -8,7 +8,7 @@ services:
     deploy:  
       replicas: 4
     environment:
-       - "constraint:node==node1"  
+       - "constraint:node==worker1"  
     networks:
       - akshay29net
   cont30:
@@ -17,6 +17,8 @@ services:
       - 5000:5000
     deploy:
       replicas: 3
+    environment:
+       - "constraint:node==worker2"
     networks:
       - akshay29net
 networks:
