@@ -6,7 +6,9 @@ services:
     ports:
       - 3089:3089 
     deploy:  
-      replicas: 3
+      replicas: 4
+    environment:
+       - "constraint:node==node1"  
     networks:
       - akshay29net
   cont30:
